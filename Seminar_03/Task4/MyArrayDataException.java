@@ -8,6 +8,7 @@ public class MyArrayDataException extends Exception{
         super(message);
     }
     public MyArrayDataException (int i, int j){
+
         super(String.format("В ячейке [%d][%d]не число", i, j));
     }
 }

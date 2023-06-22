@@ -42,21 +42,21 @@ public class Main {
 
         // === Блок try / catch ===
         // Ver.1 =================================================================================================
-//        try {
-//            int result = 10/0;
-//        } catch (ArithmeticException e) {
-//            System.err.println("Operation divide by zero not supported");
-//        }
-//        System.out.println();
-//        int number = 1;
-//        try{
-//            number = 10/0;
-//        } catch (ArithmeticException e) {
-//            System.err.println("Operation divide by zero not supported"); // перехватили исключение
-//        }
-//        System.out.println(number); // при этом код продолжется выполнятся, если блок catch
-        // не сработает, то number обновится
-//        System.out.println();
+        try {
+            int result = 10/0;
+        } catch (ArithmeticException e) {
+            System.err.println("Operation divide by zero not supported1");
+        }
+        System.out.println();
+        int number = 1;
+        try{
+            number = 10/0;
+        } catch (ArithmeticException e) {
+            System.err.println("Operation divide by zero not supported"); // перехватили исключение
+        }
+        System.out.println(number); // при этом код продолжется выполнятся, если блок catch
+         //не сработает, то number обновится
+        System.out.println();
         // Ver.2 =================================================================================================
 //        int number2 = 1;
 //        try{
@@ -117,23 +117,23 @@ public class Main {
 //        }
         // ======================================================================================================
         // так же, можно добавить выполнение определенных операций не зависимо от выполнения блока try / catch
-        FileReader reader = null;
-        try {
-            reader = new FileReader("test");
-            reader.read();
-        } catch (RuntimeException | IOException e) {
-            System.err.println("catch exception: " + e.getClass().getSimpleName());
-        } finally { // блок, который в любом случае будет выполнен
-            System.out.println("finaly start");
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    System.err.println("Exception while close");
-                }
-            }
-            System.out.println("finaly end");
-        }
+//        FileReader reader = null;
+//        try {
+//            reader = new FileReader("C:\\Users\\pakho\\IdeaProjects\\Seminar_01\\src\\Lecture_02\\test.md");
+//            reader.read();
+//        } catch (RuntimeException | IOException e) {
+//            System.err.println("catch exception: " + e.getClass().getSimpleName());
+//        } finally { // блок, который в любом случае будет выполнен
+//            System.out.println("finaly start");
+//            if (reader != null) {
+//                try {
+//                    reader.close();
+//                } catch (IOException e) {
+//                    System.err.println("Exception while close");
+//                }
+//            }
+//            System.out.println("finaly end");
+//        }
 
     }
 }
