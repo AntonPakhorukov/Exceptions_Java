@@ -7,60 +7,59 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Human human = new Human();
-        human.surname = "Pakhorukov";
-        human.name = "Anton";
-        human.patronymic = "Vladislavovich";
-        human.birthday = "17.02.1985";
-        human.gender = "m";
-        human.phone = "89137869449";
-        System.out.println(human.toString());
-
 
         try {
-//            String[] test = getData();
-//            print(test);
-//            Human human1 = new Human(getData());
-//            System.out.println("Human1: " + human1);
-//            System.out.println(human1.name);
-//            System.out.println(human1.phone);
-            addHuman(new Human(getData()));
+            while (true) {
+                addHuman(new Human(getData()));
+            }
         } catch (InputDataException e) {
             System.err.println(e.getMessage());
+        } catch (RuntimeException e) {
+            System.err.println(e.getMessage());
         }
-
     }
 
     public static void addHuman(Human human) {
         try (FileWriter writer = new FileWriter(new File(human.surname + ".txt"), true)) {
             writer.write(String.valueOf(human) + "\n");
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Произошла ошибка ввода/вывода");
         }
     }
 
     public static String[] getData() {
         String[] result = null;
-        try (Scanner scan = new Scanner(System.in)) {
+        try {
+            Scanner scan = new Scanner(System.in);
+            System.out.println("Для выхода введите: exit");
             System.out.print("Введите данные пользователя в формате:\n" +
                     "  Ivanov Ivan Ivanovich 01.02.2000 89134567890 m\n" +
                     ": ");
             result = scan.nextLine().split(" ");
-            if (result.length < 6) { // проверка кол-ва данных
-                throw new InputDataException("Вы ввели меньше данных, чем требуется");
-            } else if (result.length > 6) { // проверка кол-ва данных
-                throw new InputDataException("Вы ввели больше данных, чем требуется");
-            } else if (result[0].isEmpty() | result[1].isEmpty() | result[2].isEmpty() | // проверка пустого ввода
-            result[3].isEmpty() | result[4].isEmpty() | result[5].isEmpty()) {
-                throw new InputDataException("Ошибка ввода данных");
+            if (result[0].equals("exit")) {
+                scan.close();
+                throw new RuntimeException("Программа закрыта");
             } else {
-                examinationFIO(result); // Проверка ФИО выведена в отдельный метод
-                examinationDate(result); // проверка ввода даты рождения выведена в отдельный метод
-                examinationGender(result); // Проверка на гендер выведена в отдельный метод
-                examinationPhone(result); // Проверка номера телефона выведена в отдельный метод
+                if (result.length < 6) { // проверка кол-ва данных
+                    scan.close();
+                    throw new InputDataException("Вы ввели меньше данных, чем требуется");
+                } else if (result.length > 6) { // проверка кол-ва данных
+                    scan.close();
+                    throw new InputDataException("Вы ввели больше данных, чем требуется");
+                } else if (result[0].isEmpty() | result[1].isEmpty() | result[2].isEmpty() | // проверка пустого ввода
+                        result[3].isEmpty() | result[4].isEmpty() | result[5].isEmpty()) {
+                    scan.close();
+                    throw new InputDataException("Ошибка ввода данных");
+                } else {
+                    examinationFIO(result); // Проверка ФИО выведена в отдельный метод
+                    examinationDate(result); // проверка ввода даты рождения выведена в отдельный метод
+                    examinationGender(result); // Проверка на гендер выведена в отдельный метод
+                    examinationPhone(result); // Проверка номера телефона выведена в отдельный метод
+                }
             }
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e.getMessage());
         }
-
         return result;
     }
 
@@ -115,12 +114,6 @@ public class Main {
             if(!string[5].toLowerCase().equals("f")) {
                 throw new InputDataException("Не верно указан гендер");
             }
-        }
-    }
-
-    public static void print(String[] string) {
-        for (int i = 0; i < string.length; i++) {
-            System.out.print(string[i] + " ");
         }
     }
 }

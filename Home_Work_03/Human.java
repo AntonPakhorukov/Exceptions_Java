@@ -25,7 +25,7 @@ public class Human {
         this.patronymic = data[2];
         this.birthday = data[3];
         this.phone = data[4];
-        this.gender = data[5];
+        this.gender = data[5].toLowerCase();
     }
     public String toString(){
         return surname + " " + name + " " + patronymic + " " + birthday + " " + phone + " " + gender;
