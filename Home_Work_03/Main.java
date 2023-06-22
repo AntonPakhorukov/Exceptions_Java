@@ -33,7 +33,7 @@ public class Main {
 
     public static void addHuman(Human human) {
         try (FileWriter writer = new FileWriter(new File(human.surname + ".txt"), true)) {
-            writer.write(String.valueOf(human));
+            writer.write(String.valueOf(human) + "\n");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
